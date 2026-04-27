@@ -11,3 +11,6 @@ Rekomendasi Strategi:
 1. Optimalisasi Profit: Untuk produk dengan harga di atas Rp 300.000 (margin 25-30%), disarankan untuk mengurangi intensitas diskon karena peminat produk ini cenderung lebih mementingkan ketersediaan stok (availability) daripada harga.
 2. Peningkatan Layanan: Melakukan audit operasional pada "Top 5 Cabang Anomali" untuk memperbaiki prosedur transaksi (kecepatan kasir, keramahan apoteker) agar selaras dengan kualitas fisik gedung cabang.
 3. Ekspansi Target: Fokus pada provinsi dengan jumlah transaksi tinggi namun profit rendah dengan cara mengevaluasi komposisi produk (product mix) yang dijual di sana, beralih ke produk dengan margin laba yang lebih tinggi.
+
+SQL in Console Cloud Google: https://console.cloud.google.com/bigquery?ws=!1m5!1m4!4m3!1sadvance-age-494514-n6!2skimia_farma_evaluation_2020_2023!3stabel_analisa
+Dash Board in Looker Studio: https://datastudio.google.com/s/jy7WTFfDVS0
