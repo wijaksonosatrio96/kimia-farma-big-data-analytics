@@ -1,0 +1,103 @@
+import pandas as pd
+
+# 1. Baca file CSV mentah
+# (Pandas akan otomatis mendeteksi 'N/A', 'NA', atau sel kosong sebagai NaN/Null)
+df = pd.read_csv('kf_final_transaction_mentah.csv')
+
+# 2. Cek apakah ada nilai null di kolom tertentu
+print("Jumlah nilai kosong sebelum dibersihkan:")
+print(df.isnull().sum())
+
+# 3. (Opsional) Jika ada teks spesifik seperti "-" yang ingin diubah jadi Null
+df['price'] = df['price'].replace('-', pd.NA)
+
+# 4. Simpan kembali menjadi CSV yang sudah bersih
+# index=False agar nomor baris tidak ikut tersimpan
+# na_rep='' memastikan nilai kosong ditulis tanpa spasi/teks tambahan di CSV baru
+df.to_csv('kf_final_transaction_bersih.csv', index=False, na_rep='')
+
+print("Data berhasil dibersihkan dan disimpan!")
+
+import pandas as pd
+import numpy as np
+
+# 1. Load dataset inventory mentah
+df_inv = pd.read_csv('kf_inventory_mentah.csv')
+
+# Menampilkan kondisi data yang kotor
+print("Jumlah nilai kotor/kosong sebelum dibersihkan:")
+print(df_inv.isna().sum())
+
+# 2. Pembersihan Kolom Numerik (Contoh: 'stock' atau 'price')
+# Fungsi 'coerce' ini sangat ajaib. Ia akan memaksa kolom menjadi angka.
+# Jika ia menemukan teks seperti "N/A", "-", atau "Kosong", ia otomatis mengubahnya menjadi NaN (Null).
+df_inv['opname_stock'] = pd.to_numeric(df_inv['opname_stock'], errors='coerce')
+
+# 3. Keputusan Bisnis (Pilih salah satu):
+
+# OPSI A: Biarkan sebagai NULL
+# Gunakan ini jika "N/A" berarti datanya memang belum dihitung/hilang dari sistem cabang.
+# (Tidak perlu tambahan kode, 'coerce' di atas sudah mengubahnya jadi Null)
+
+# OPSI B: Ubah menjadi Angka Nol (0) - *Paling sering digunakan di Logistik*
+# Gunakan ini jika "N/A" sebenarnya berarti stok di cabang tersebut memang sedang kosong/habis.
+df_inv['opname_stock'] = df_inv['opname_stock'].fillna(0).astype(int)
+
+# 4. Simpan kembali menjadi CSV yang siap upload
+# na_rep='' memastikan jika ada nilai Null, ia ditulis kosong (tanpa spasi) di CSV
+df_inv.to_csv('kf_inventory_bersih.csv', index=False, na_rep='')
+
+print("Data kf_inventory berhasil dibersihkan dan dikonversi!")
+
+import pandas as pd
+
+# 1. Load dataset kantor cabang
+df_cabang = pd.read_csv('kf_kantor_cabang_mentah.csv')
+
+# 2. Pembersihan kolom 'rating'
+# Fungsi coerce otomatis mengubah string/teks seperti "N/A" menjadi NaN (Null)
+# Ini memastikan kolom rating murni berisi angka pecahan (Float) atau Null
+df_cabang['rating'] = pd.to_numeric(df_cabang['rating'], errors='coerce')
+
+# 3. (Opsional) Membersihkan spasi berlebih pada nama kota/provinsi
+# Kadang data input manual memiliki spasi tersembunyi seperti " Jakarta "
+df_cabang['kota'] = df_cabang['kota'].str.strip()
+df_cabang['provinsi'] = df_cabang['provinsi'].str.strip()
+
+# 4. Simpan kembali ke CSV
+# na_rep='' memastikan Null ditulis sebagai sel kosong di CSV agar dibaca benar oleh BigQuery
+df_cabang.to_csv('kf_kantor_cabang_bersih.csv', index=False, na_rep='')
+
+print("Data kf_kantor_cabang berhasil dibersihkan!")
+
+import pandas as pd
+
+# 1. Load dataset master produk
+df_product = pd.read_csv('kf_product_mentah.csv')
+
+# Menampilkan ringkasan data kotor
+print("Deteksi anomali pada dataset produk:")
+print(df_product.isna().sum())
+
+# 2. Membersihkan kolom Harga ('price')
+# Memaksa teks pengganggu (seperti "N/A", "-", "Kosong") menjadi NaN (Null)
+df_product['price'] = pd.to_numeric(df_product['price'], errors='coerce')
+
+# 3. Keputusan Bisnis Logistik:
+# Berbeda dengan inventory (di mana stok kosong bisa diisi 0),
+# untuk HARGAl lebih aman dibiarkan sebagai Null (NaN) jika datanya tidak valid.
+# Mengisi harga dengan angka 0 bisa merusak algoritma perhitungan rata-rata harga produk.
+
+# 4. Standarisasi Teks (Opsional tapi sangat disarankan)
+# Memastikan nama produk atau kategori tidak memiliki spasi berlebih
+if 'product_name' in df_product.columns:
+    df_product['product_name'] = df_product['product_name'].str.strip()
+if 'product_category' in df_product.columns:
+    df_product['product_category'] = df_product['product_category'].str.strip()
+
+# 5. Ekspor ke CSV yang siap diunggah ke BigQuery
+# na_rep='' memastikan Null terbaca sempurna oleh fitur Auto-detect BigQuery
+df_product.to_csv('kf_product_bersih.csv', index=False, na_rep='')
+
+print("Dataset kf_product sudah berformat standar dan siap di-upload!")
+
