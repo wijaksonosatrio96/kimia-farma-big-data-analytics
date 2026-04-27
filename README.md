@@ -1,5 +1,4 @@
 # kimia-farma-big-data-analytics
-tabel_analisa.sql
 
 Analisis Data & Rekomendasi Strategis (Contoh Temuan)
 
