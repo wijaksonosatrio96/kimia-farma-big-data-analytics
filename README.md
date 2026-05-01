@@ -31,5 +31,6 @@ Manajemen HR dan Operasional harus segera melakukan audit prosedur (SOP) dan pel
 
 4. Antisipasi Siklus Penurunan (Seasonality)
 Untuk meredam drop pendapatan musiman yang terekam pada grafik garis, tim Marketing dapat meluncurkan kampanye kesehatan preventif atau promo loyalty program spesifik tepat sebelum bulan-bulan terjadinya penurunan tajam tersebut untuk mempertahankan daya beli pelanggan.
+
 SQL in Console Cloud Google: https://console.cloud.google.com/bigquery?ws=!1m5!1m4!4m3!1sadvance-age-494514-n6!2skimia_farma_evaluation_2020_2023!3stabel_analisa
 Dash Board in Looker Studio: https://datastudio.google.com/s/jy7WTFfDVS0
